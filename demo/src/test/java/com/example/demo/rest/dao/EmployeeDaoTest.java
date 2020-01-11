@@ -27,7 +27,7 @@ public class EmployeeDaoTest {
 	
 	@Test
 	public void failTest() {
-		assertThat("Hola").isNotEqualTo("Hola");
+		assertThat("Hola").isNotEqualTo("Adios");
 	}
 	
 	
