@@ -1,4 +1,115 @@
-# CalidadIntegracionContinua
+# Calidad Integración Continua
+
+Aquí mostramos las configuraciones que se piden para la práctica 4 de Calidad del Software.
+
+## Configuración del *job*
+
+```xml
+<?xml version='1.1' encoding='UTF-8'?>
+<maven2-moduleset plugin="maven-plugin@3.4">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
+      <projectUrl>https://github.com/EvelioM/CalidadIntegracionContinua/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/EvelioM/CalidadIntegracionContinua</url>
+        <credentialsId>6092058c-d6a8-4b0f-8bad-27e58f497cf9</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>@hourly</spec>
+    </hudson.triggers.TimerTrigger>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.5">
+      <spec></spec>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <rootModule>
+    <groupId>com.example</groupId>
+    <artifactId>demo</artifactId>
+  </rootModule>
+  <rootPOM>demo/pom.xml</rootPOM>
+  <aggregatorStyleBuild>true</aggregatorStyleBuild>
+  <incrementalBuild>false</incrementalBuild>
+  <ignoreUpstremChanges>false</ignoreUpstremChanges>
+  <ignoreUnsuccessfulUpstreams>false</ignoreUnsuccessfulUpstreams>
+  <archivingDisabled>false</archivingDisabled>
+  <siteArchivingDisabled>false</siteArchivingDisabled>
+  <fingerprintingDisabled>false</fingerprintingDisabled>
+  <resolveDependencies>false</resolveDependencies>
+  <processPlugins>false</processPlugins>
+  <mavenValidationLevel>-1</mavenValidationLevel>
+  <runHeadless>false</runHeadless>
+  <disableTriggerDownstreamProjects>false</disableTriggerDownstreamProjects>
+  <blockTriggerWhenBuilding>true</blockTriggerWhenBuilding>
+  <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+  <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+  <reporters/>
+  <publishers>
+    <org.jenkinsci.plugins.githubissues.GitHubIssueNotifier plugin="github-issues@1.2.4">
+      <issueTitle></issueTitle>
+      <issueBody></issueBody>
+      <issueLabel></issueLabel>
+      <issueRepo></issueRepo>
+      <issueReopen>false</issueReopen>
+      <issueAppend>false</issueAppend>
+    </org.jenkinsci.plugins.githubissues.GitHubIssueNotifier>
+  </publishers>
+  <buildWrappers/>
+  <prebuilders/>
+  <postbuilders>
+    <org.sonatype.nexus.ci.nxrm.NexusPublisherBuildStep plugin="nexus-jenkins-plugin@3.8.20191216-154521.a7bf2be">
+      <nexusInstanceId>localNexus</nexusInstanceId>
+      <nexusRepositoryId>CIMaven</nexusRepositoryId>
+      <packages>
+        <org.sonatype.nexus.ci.nxrm.MavenPackage>
+          <coordinate>
+            <groupId>com.example</groupId>
+            <artifactId>demo</artifactId>
+            <version>1.0</version>
+            <packaging>jar</packaging>
+          </coordinate>
+          <assets>
+            <org.sonatype.nexus.ci.nxrm.MavenAsset>
+              <filePath>/var/lib/jenkins/workspace/CIMaven/demo/target/demo-0.0.1-SNAPSHOT.jar</filePath>
+              <classifier></classifier>
+              <extension>jar</extension>
+            </org.sonatype.nexus.ci.nxrm.MavenAsset>
+          </assets>
+        </org.sonatype.nexus.ci.nxrm.MavenPackage>
+      </packages>
+    </org.sonatype.nexus.ci.nxrm.NexusPublisherBuildStep>
+  </postbuilders>
+  <runPostStepsIfResult>
+    <name>SUCCESS</name>
+    <ordinal>0</ordinal>
+    <color>BLUE</color>
+    <completeBuild>true</completeBuild>
+  </runPostStepsIfResult>
+</maven2-moduleset>
+```
 
 ## Resultado de la última *build*
 
