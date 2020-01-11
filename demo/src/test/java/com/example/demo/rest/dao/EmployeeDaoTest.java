@@ -19,7 +19,7 @@ public class EmployeeDaoTest {
 	public void getAllEmployeesTest() {
 		
 		Employees actualList = empDao.getAllEmployees();
-		assertNotNull("Not null", actualList);
+		assertNotNull(actualList);
 		
 	}
 	
